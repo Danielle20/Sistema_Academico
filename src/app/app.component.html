@@ -1,0 +1,121 @@
+
+<style>
+  h1 {
+    margin: 8px 0;
+    color: #125699;
+  }
+
+  
+  .content {
+    margin: 20px ;
+    padding: 0 10px;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+  }
+
+
+  a,
+  a:visited,
+  a:hover {
+    color: #1976d2;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #125699;
+  }
+
+
+  table{
+    border: 5px solid black ;
+  }
+  label {
+    padding-right: 10px;
+  }
+  
+</style>
+ 
+<div class="content" role="main">
+  <h1>{{ title }}</h1>
+  <!--FORMULARIO--->
+  <h4> Codigo: {{codigo}}</h4>
+  <h4> Disciplina: {{disciplina_escolhida.nome}}</h4>
+  <h4> Professor: {{professor_escolhido}}</h4>
+  <h4> Alunos:</h4>
+  <p *ngFor=" let aluno of aluno_turma">{{aluno.nroMatric}} - {{aluno.nome}}<br> </p>
+  <form >
+    <br>
+
+
+    <div class="form-group">
+      <label>Código turma: </label>
+       <input type="text" name="codigo" [(ngModel)]="codigo" >   
+    </div>
+    <br>
+    
+    
+    <div class="form-group">
+      <label>Professor:</label>
+      <select class="form-control">
+        <option value="">Selecione um professor</option>
+        <option *ngFor = "let professor of lista_professor" (click) = 'professor_escolhido=professor' value ="{{professor}}" > {{professor}} </option>
+      </select>
+    </div>
+    <br>
+  
+    <div class="form-group">
+      <label>Disciplina: </label>
+      <select class="form-control" >
+        <option value="">Selecione uma disciplina</option>
+        <option *ngFor = "let disciplina of lista_disciplina" (click) = 'disciplina_escolhida=disciplina'value="{{disciplina}}" > {{disciplina.codigo}} - {{disciplina.nome}} </option>
+      </select>
+    </div>
+    <br>
+  
+   
+    <div class="form-group">
+      <label>Alunos:</label>
+      <select class="form-control" >
+        <option value="">Selecione um aluno</option>
+        <option *ngFor = "let aluno of lista_alunos" (click) = 'aluno_escolhido=aluno' value="{{aluno}}" > {{aluno.nroMatric}} - {{aluno.nome}} </option>
+      </select>
+    </div>
+  
+  
+    <button class="btn btn-outline-info" (click) ='addAluno()' >Matricular</button>
+    <br>
+    <br>
+    <button class="btn btn-outline-success"  (click) = 'fecharTurma()'>Fechar turma</button>
+    <br>
+  
+  </form>
+  <hr>
+  <br>
+  <label  for="">Buscar Turmas ID: </label><input type="text" name="buscaTurma" [(ngModel)]="buscaTurma"(keyup) ='buscarTurmaPorId()' >   
+  <button style = 'margin-left:10px' class="btn btn-outline-success"  (click) = 'MostrarTodasTurmas()'>Mostrar todas Turmas</button>
+  <h4>Turmas:</h4>
+  <table class="table">
+    <thead>
+ <tr>
+  <th>Código da turma</th>
+  <th>Disciplina</th>
+  <th>Professor</th>
+  <th>Alunos</th>
+ </tr>
+ </thead>
+ <tbody>
+  <tr *ngFor="let resultado of resultadoTurma">
+    <td> {{resultado.codigo}}</td>
+    <td> {{resultado.discipTurma.nome}}</td>
+    <td> {{resultado.professor}}</td>
+    <td> <p class= 'ml-2' *ngFor = 'let aluno of resultado.lista_alunos'>{{aluno.nome}} - {{aluno.nroMatric}} <br>
+    </p></td>
+  </tr>
+  </tbody>
+ </table>
+  
+ </div>
+  
+ <router-outlet></router-outlet>
+ 
